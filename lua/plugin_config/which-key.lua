@@ -1,19 +1,7 @@
 local wk = require("which-key")
--- As an example, we will create the following mappings:
---  * <leader>ff find files
---  * <leader>fr show recent files
---  * <leader>fb Foobar
--- we'll document:
---  * <leader>fn new file
---  * <leader>fe edit file
--- and hide <leader>1
-
--- Add Sanity checks for c++
--- clang++ -O1 -g -fsanitize=address -fno-omit-frame-pointer $files -o test
-
-
 local fterm = require('FTerm')
 local dap = require('dap')
+
 
 wk.register({
     f = {
@@ -25,6 +13,7 @@ wk.register({
     t = {
         name = "toggle",
         t = { "<cmd>NvimTreeToggle<cr>", "Nvim-tree" },
+        g = { "<cmd>Neogit<cr>", "Neogit" },
     },
     [";"] = {
         name = "floaterm",
@@ -44,7 +33,7 @@ wk.register({
             b = { "<cmd>CMakeBuild<cr>", "Build" },
             r = { "<cmd>CMakeRun<cr>", "Run" },
             d = { "<cmd>CMakeDebug<cr>", "Debug"},
----@diagnostic disable-next-line: missing-fields
+            ---@diagnostic disable-next-line: missing-fields
             c = { function() fterm.scratch({cmd = 'clang-tidy --config-file=.clang-tidy -p build ' .. vim.fn.expand('%')}) end, "Check"},
             f = { "<cmd>!clang-format " .. vim.fn.expand('%') .. " --style=google --sort-includes -i<cr><cr>", "Format" },
         },
@@ -56,8 +45,13 @@ wk.register({
     l = {
         name = "lsp",
         a = { function() vim.lsp.buf.code_action() end, "action"},
+        f = { function() vim.lsp.buf.format() end, "format"},
+    },
+    v = {
+        name = "variable",
         d = { function() vim.lsp.buf.definition() end, "definition"},
         r = { function() vim.lsp.buf.references() end, "references"},
         n = { function() vim.lsp.buf.rename() end, "rename" },
+        h = { function() vim.lsp.buf.hover() end, "hover" },
     },
 }, { prefix = "<leader>" })

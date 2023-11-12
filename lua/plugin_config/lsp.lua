@@ -2,21 +2,23 @@
 -- LSP Setup
 --=====================
 local border = {
-      {"🭽", "FloatBorder"},
-      {"▔", "FloatBorder"},
-      {"🭾", "FloatBorder"},
-      {"▕", "FloatBorder"},
-      {"🭿", "FloatBorder"},
-      {"▁", "FloatBorder"},
-      {"🭼", "FloatBorder"},
-      {"▏", "FloatBorder"},
+      {"╭", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╮", "FloatBorder"},
+      {"│", "FloatBorder"},
+      {"╯", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╰", "FloatBorder"},
+      {"│", "FloatBorder"},
 }
 
 -- LSP settings (for overriding per client)
 local handlers =  {
   ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border}),
+  ["textDocument/diagnostic"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border}),
 }
+
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -30,7 +32,6 @@ local on_attach = function(_, bufnr)
     if desc then
       desc = 'LSP: ' .. desc
     end
-
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
@@ -60,6 +61,7 @@ local servers = {
   },
 }
 
+require("lspconfig.ui.windows").default_options.border = "rounded"
 --======================
 -- Setup neovim lua
 --======================
@@ -73,7 +75,20 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 --======================
 -- Mason Setup
 --======================
-require('mason').setup()
+require('mason').setup({
+    ui = {
+      check_outdated_packages_on_open = true,
+      width = 0.8,
+      height = 0.9,
+      border = "rounded",
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
+    }
+
+})
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()

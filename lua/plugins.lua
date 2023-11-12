@@ -18,9 +18,13 @@ vim.opt.rtp:prepend(lazypath)
 --==========================
 -- Load Plugins
 --==========================
+local opts = {
+    ui = {
+        border = "rounded"
+    }
+}
 
 require("lazy").setup({
-
 --==========================
 -- Work Flow
 --==========================
@@ -35,7 +39,7 @@ require("lazy").setup({
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
                 window = {
-                    border      = "single",
+                    border      = "rounded",
                     position    = "bottom",
                     margin      = { 1, 0, 1, 0 },
                     padding     = { 2, 2, 2, 2 },
@@ -128,6 +132,10 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
+    "onsails/lspkind.nvim",
+
+
+
 
     -- Snippet Support
     "L3MON4D3/LuaSnip",
@@ -185,6 +193,8 @@ require("lazy").setup({
         -- version = "*"
     },
 
+    "simrat39/rust-tools.nvim",
+
 
     --======================
     -- Git
@@ -202,7 +212,10 @@ require("lazy").setup({
       config = true
     },
 
+    -- Git sings
     "lewis6991/gitsigns.nvim",
+
+
 
     --======================
     -- Normal Mode
@@ -224,5 +237,4 @@ require("lazy").setup({
     --======================
     -- Insert Mode
     --======================
-
-})
+}, opts)

@@ -42,7 +42,7 @@ require('startup').setup({
         margin = 5,
         content = {
             { " Find File", "Telescope find_files", "<leader>ff" },
-            { " Find Word", "Telescope live_grep", "<leader>fw" },
+            { " Find Word", "Telescope live_grep", "<leader>fw" },
             { " Recent Files", "Telescope oldfiles", "<leader>fr" },
             { " File Browser", "Telescope file_browser", "<leader>fb" },
             { " Colorschemes", "Telescope colorscheme", "a" },

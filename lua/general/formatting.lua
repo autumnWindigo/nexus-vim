@@ -24,5 +24,3 @@ vim.cmd([[
     autocmd BufWritePre *.[ch] %s/\%$/\r/e
     autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
 ]])
-
-vim.cmd.au("CursorHold <buffer> lua vim.lsp.buf.hover()")
