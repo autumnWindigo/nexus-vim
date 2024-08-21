@@ -25,9 +25,9 @@ local opts = {
 }
 
 require("lazy").setup({
---==========================
--- Work Flow
---==========================
+    --==========================
+    -- Work Flow
+    --==========================
     -- Which-key (Make it like emacs)
     {
         "folke/which-key.nvim",
@@ -39,21 +39,25 @@ require("lazy").setup({
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
                 window = {
-                    border      = "rounded",
-                    position    = "bottom",
-                    margin      = { 1, 0, 1, 0 },
-                    padding     = { 2, 2, 2, 2 },
-                    winblend    = 0,
+                    border   = "rounded",
+                    position = "bottom",
+                    margin   = { 1, 0, 1, 0 },
+                    padding  = { 2, 2, 2, 2 },
+                    winblend = 0,
                 },
             })
         end,
     },
 
     -- Formatter
-    "jose-elias-alvarez/null-ls.nvim",
+    {
+        'stevearc/conform.nvim',
+        opts = {},
+    },
 
     -- Telescope
-    "nvim-telescope/telescope.nvim", tag = '0.1.1',
+    "nvim-telescope/telescope.nvim",
+    tag = '0.1.1',
 
     -- Telescope requires Popup
     "nvim-lua/popup.nvim",
@@ -75,10 +79,10 @@ require("lazy").setup({
 
     -- Org Mode Support
     {
-    "nvim-orgmode/orgmode",
-    config = function()
-       require('orgmode').setup{}
-    end
+        "nvim-orgmode/orgmode",
+        config = function()
+            require('orgmode').setup {}
+        end
     },
 
 
@@ -98,7 +102,7 @@ require("lazy").setup({
     "folke/tokyonight.nvim",
 
     -- Catppuccin theme
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000  },
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
     -- Lua Bar
     "nvim-lualine/lualine.nvim",
@@ -123,6 +127,7 @@ require("lazy").setup({
     -- Mason (install lsp)
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
+    "jay-babu/mason-nvim-dap.nvim",
 
     -- LSP for nvim
     "neovim/nvim-lspconfig",
@@ -133,9 +138,6 @@ require("lazy").setup({
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "onsails/lspkind.nvim",
-
-
-
 
     -- Snippet Support
     "L3MON4D3/LuaSnip",
@@ -151,7 +153,13 @@ require("lazy").setup({
     "mfussenegger/nvim-dap",
 
     -- Dap Ui
-    "rcarriga/nvim-dap-ui",
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            "nvim-neotest/nvim-nio"
+        }
+    },
 
     -- Dap Completion TODO config
     "rcarriga/cmp-dap",
@@ -169,18 +177,19 @@ require("lazy").setup({
     "elkowar/yuck.vim",
 
     -- Tabs
-    {'romgrk/barbar.nvim',
+    {
+        'romgrk/barbar.nvim',
         dependencies = {
-          'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-          'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+            'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
+            'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
         },
         init = function() vim.g.barbar_auto_setup = false end,
         opts = {
-          -- lazy.nvim will automatically call setup for you.
-          --   put your options here, anything missing will use the default:
-          animation = true,
-          insert_at_start = true,
-          -- …etc.
+            -- lazy.nvim will automatically call setup for you.
+            --   put your options here, anything missing will use the default:
+            animation = true,
+            insert_at_start = true,
+            -- …etc.
         },
     },
 
@@ -202,14 +211,14 @@ require("lazy").setup({
 
     -- git support
     {
-      "NeogitOrg/neogit",
-      dependencies = {
-        "nvim-lua/plenary.nvim",         -- required
-        "nvim-telescope/telescope.nvim", -- optional
-        "sindrets/diffview.nvim",        -- optional
-        "ibhagwan/fzf-lua",              -- optional
-      },
-      config = true
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",         -- required
+            "nvim-telescope/telescope.nvim", -- optional
+            "sindrets/diffview.nvim",        -- optional
+            "ibhagwan/fzf-lua",              -- optional
+        },
+        config = true
     },
 
     -- Git sings
@@ -225,7 +234,8 @@ require("lazy").setup({
     "tpope/vim-repeat",
 
     -- Lightspeed ('S/s' like f for multi line)
-    "ggandor/lightspeed.nvim",
+    --"ggandor/lightspeed.nvim",
+    "ggandor/leap.nvim",
 
     --=======================
     --  Visual Mode
