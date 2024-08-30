@@ -108,6 +108,9 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
 	handlers = handlers,
 })
 
+-- Need to setup nivm-java before lspconfig
+require('java').setup()
+
 mason_lspconfig.setup_handlers {
 	function(server_name)
 		require('lspconfig')[server_name].setup {

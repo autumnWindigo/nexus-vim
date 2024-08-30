@@ -4,6 +4,7 @@ require("conform").setup({
         lua = { "stylua" },
         asm = { "asmfmt" },
         C = { "clang-format" },
+        python = { "ruff" },
     },
 
     format_on_save = {
