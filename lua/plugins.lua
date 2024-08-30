@@ -34,18 +34,6 @@ require("lazy").setup({
         config = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
-            require("which-key").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-                window = {
-                    border   = "rounded",
-                    position = "bottom",
-                    margin   = { 1, 0, 1, 0 },
-                    padding  = { 2, 2, 2, 2 },
-                    winblend = 0,
-                },
-            })
         end,
     },
 
@@ -109,6 +97,10 @@ require("lazy").setup({
 
     -- Start page
     "startup-nvim/startup.nvim",
+
+    -- Notifications
+    "rcarriga/nvim-notify",
+
     --=======================
     -- Programming / LSP
     --=======================
@@ -202,8 +194,18 @@ require("lazy").setup({
         -- version = "*"
     },
 
+    -- Rust Stuff
     "simrat39/rust-tools.nvim",
 
+    -- Typescript LSP enhancement
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        opts = {},
+    },
+
+    -- Java tools
+    "nvim-java/nvim-java",
 
     --======================
     -- Git
@@ -224,6 +226,26 @@ require("lazy").setup({
     -- Git sings
     "lewis6991/gitsigns.nvim",
 
+    -- Database Helpers
+    "kristijanhusak/vim-dadbod-completion",
+
+    {
+        'kristijanhusak/vim-dadbod-ui',
+        dependencies = {
+            { 'tpope/vim-dadbod',                     lazy = true },
+            { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+        },
+        cmd = {
+            'DBUI',
+            'DBUIToggle',
+            'DBUIAddConnection',
+            'DBUIFindBuffer',
+        },
+        init = function()
+            -- Your DBUI configuration
+            vim.g.db_ui_use_nerd_fonts = 1
+        end,
+    },
 
 
     --======================
