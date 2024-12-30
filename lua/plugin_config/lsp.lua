@@ -19,7 +19,6 @@ local handlers = {
 	["textDocument/diagnostic"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
 }
 
-
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
 	-- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -30,9 +29,9 @@ local on_attach = function(_, bufnr)
 	-- for LSP related items. It sets the mode, buffer and description for us each time.
 	local nmap = function(keys, func, desc)
 		if desc then
-			desc = 'LSP: ' .. desc
+			desc = "LSP: " .. desc
 		end
-		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
 end
 
@@ -54,25 +53,33 @@ local servers = {
 			telemetry = { enable = false },
 		},
 	},
+
+	pylsp = {
+		pylsp = {
+			plugins = {
+				pycodestyle = {
+					ignore = { "W391" },
+					maxLineLength = 180,
+				},
+			},
+		},
+	},
 }
-
-
 
 require("lspconfig.ui.windows").default_options.border = "rounded"
 --======================
 -- Setup neovim lua
 --======================
-require('neodev').setup()
+require("neodev").setup()
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 --======================
 -- Mason Setup
 --======================
-require('mason').setup({
+require("mason").setup({
 	ui = {
 		check_outdated_packages_on_open = true,
 		width = 0.8,
@@ -81,26 +88,26 @@ require('mason').setup({
 		icons = {
 			package_installed = "✓",
 			package_pending = "➜",
-			package_uninstalled = "✗"
-		}
+			package_uninstalled = "✗",
+		},
 	},
 })
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Setup mason so it can manage external tooling
-require('mason').setup()
+require("mason").setup()
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require("mason-lspconfig")
 
-mason_lspconfig.setup {
+mason_lspconfig.setup({
 	ensure_installed = vim.tbl_keys(servers),
-}
+})
 
-local lspconfig = require('lspconfig')
+local lspconfig = require("lspconfig")
 
 lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
 	capabilities = capabilities,
@@ -109,23 +116,23 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
 })
 
 -- Need to setup nivm-java before lspconfig
-require('java').setup()
+require("java").setup()
 
-mason_lspconfig.setup_handlers {
+mason_lspconfig.setup_handlers({
 	function(server_name)
-		require('lspconfig')[server_name].setup {
+		require("lspconfig")[server_name].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = servers[server_name],
 			handlers = handlers,
-		}
+		})
 	end,
 	["asm_lsp"] = function()
 		require("lspconfig").asm_lsp.setup(vim.tbl_deep_extend("force", lspconfig.util.default_config, {
-			filetypes = { "asm", "vasm", "S", "s" }
+			filetypes = { "asm", "vasm", "S", "s" },
 		}))
 	end,
-}
+})
 
 require("mason-nvim-dap").setup({
 	ensure_installed = { "cpptools" },

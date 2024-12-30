@@ -65,12 +65,24 @@ require("lazy").setup({
     -- Devicons support (nvim-tree)
     "nvim-tree/nvim-web-devicons",
 
-    -- Org Mode Support
     {
-        "nvim-orgmode/orgmode",
+        'nvim-orgmode/orgmode',
+        event = 'VeryLazy',
+        ft = { 'org' },
         config = function()
-            require('orgmode').setup {}
-        end
+        -- Setup orgmode
+        require('orgmode').setup({
+              org_agenda_files = '~/orgfiles/**/*',
+              org_default_notes_file = '~/orgfiles/refile.org',
+        })
+
+        -- NOTE: If you are using nvim-treesitter with ~ensure_installed = "all"~ option
+        -- add ~org~ to ignore_install
+        -- require('nvim-treesitter.configs').setup({
+        --   ensure_installed = 'all',
+        --   ignore_install = { 'org' },
+        -- })
+        end,
     },
 
 
@@ -100,6 +112,9 @@ require("lazy").setup({
 
     -- Notifications
     "rcarriga/nvim-notify",
+
+    --  Oil file
+    "stevearc/oil.nvim",
 
     --=======================
     -- Programming / LSP
