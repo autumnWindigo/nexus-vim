@@ -76,6 +76,20 @@ require("neodev").setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+
+--======================
+-- Diagnostic Config
+--======================
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = true,
+  severity_sort = true,
+  virtual_lines = true,
+})
+
+
 --======================
 -- Mason Setup
 --======================
@@ -116,22 +130,34 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
 })
 
 -- Need to setup nivm-java before lspconfig
-require("java").setup()
+-- require("java").setup()
 
-mason_lspconfig.setup_handlers({
-	function(server_name)
-		require("lspconfig")[server_name].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = servers[server_name],
-			handlers = handlers,
-		})
-	end,
-	["asm_lsp"] = function()
-		require("lspconfig").asm_lsp.setup(vim.tbl_deep_extend("force", lspconfig.util.default_config, {
-			filetypes = { "asm", "vasm", "S", "s" },
-		}))
-	end,
+require("mason-lspconfig").setup({
+	ensure_installed = {}, -- add servers you want installed automatically
+	handlers = {
+		function(server_name)
+			require("lspconfig")[server_name].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = servers and servers[server_name],
+				handlers = handlers,
+			})
+		end,
+		["asm_lsp"] = function()
+			require("lspconfig").asm_lsp.setup(vim.tbl_deep_extend("force", lspconfig.util.default_config, {
+				filetypes = { "asm", "vasm", "S", "s" },
+			}))
+		end,
+	},
+})
+
+-- Set filetypes
+vim.filetype.add({
+	extension = {
+                vert = "glsl",
+                frag = "glsl",
+                comp = "glsl",
+        }
 })
 
 require("mason-nvim-dap").setup({

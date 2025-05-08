@@ -220,7 +220,7 @@ require("lazy").setup({
     },
 
     -- Java tools
-    "nvim-java/nvim-java",
+    -- "nvim-java/nvim-java",
 
     --======================
     -- Git

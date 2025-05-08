@@ -4,7 +4,8 @@ require("conform").setup({
 		lua = { "stylua" },
 		asm = { "asmfmt" },
 		C = { "clang-format" },
-        sql = { "sqlfmt" },
+		cpp = { "clang-format" },
+		sql = { "sqlfmt" },
 	},
 
 	-- format_on_save = {
@@ -15,12 +16,12 @@ require("conform").setup({
 })
 
 -- Format on save
--- vim.api.nvim_create_autocmd("BufWritePre", {
--- 	pattern = "*",
--- 	callback = function(args)
--- 		require("conform").format({ bufnr = args.buf })
--- 	end,
--- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf })
+	end,
+})
 
 -- Format command
 vim.api.nvim_create_user_command("Format", function(args)

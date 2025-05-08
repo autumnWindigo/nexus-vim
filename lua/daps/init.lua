@@ -3,7 +3,7 @@ if not dap_status_ok then
     return
 end
 
-dap.set_exception_breakpoints("default")
+-- dap.set_exception_breakpoints("default")
 
 local dap_virtual_text_status_ok, dap_virtual_text_status = pcall(require, "nvim-dap-virtual-text")
 if not dap_virtual_text_status_ok then
